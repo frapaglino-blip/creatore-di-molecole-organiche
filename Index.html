@@ -107,3 +107,43 @@
   </script>
 </body>
 </html>
+
+<label>Atomo aggiuntivo:
+  <select id="extraAtom">
+    <option value="">Nessuno</option>
+    <option value="O">Ossigeno (O)</option>
+    <option value="N">Azoto (N)</option>
+    <option value="Cl">Cloro (Cl)</option>
+    <option value="F">Fluoro (F)</option>
+    <option value="Br">Bromo (Br)</option>
+    <option value="I">Iodio (I)</option>
+  </select>
+</label>
+
+<button onclick="saveMolecule()">Salva Molecola come Immagine</button>
+
+function saveMolecule() {
+  const link = document.createElement('a');
+  link.download = 'molecola.png';
+  link.href = canvas.toDataURL();
+  link.click();
+}
+
+const extraAtom = document.getElementById('extraAtom').value;
+if (extraAtom) {
+  drawAtom(startX + carbonCount * spacing, startY, getColor(extraAtom), extraAtom);
+  drawBond(startX + (carbonCount - 1) * spacing, startY, startX + carbonCount * spacing, startY, "single");
+}
+
+function getColor(atom) {
+  switch (atom) {
+    case "O": return "red";
+    case "N": return "blue";
+    case "Cl":
+    case "F":
+    case "Br":
+    case "I": return "green";
+    default: return "gray";
+  }
+}
+
